@@ -24,7 +24,6 @@ def read_users(
 
 @router.get("/users/me", response_model=schemas.User)
 def read_user_me(
-        db: Session = Depends(deps.get_db),
         current_user: models.User = Depends(deps.get_current_user),
 ):
     """Read the user data for the currently authenticated user."""

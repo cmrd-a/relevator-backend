@@ -1,15 +1,14 @@
-import uvicorn
-from fastapi import Depends, FastAPI, HTTPException
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import FastAPI
 from sqlalchemy.orm import Session
 
-from app import crud, deps, models, schemas, security
-from app.api import items, users
+from app import crud, models, schemas
+from app.api import items, users, auth
 from app.database import SessionLocal, engine
 from app.settings import settings
 
 app = FastAPI()
 
+app.include_router(auth.router, tags=["auth"])
 app.include_router(users.router, tags=["users"])
 app.include_router(items.router, tags=["items"])
 
@@ -25,24 +24,3 @@ def startup_event():
         )
         crud.create_user(db, user_in)
     db.close()
-
-
-@app.post("/login/access-token", response_model=schemas.Token)
-def login_access_token(
-        db: Session = Depends(deps.get_db),
-        form_data: OAuth2PasswordRequestForm = Depends()
-):
-    """OAuth2 compatible token login, get an access token for future requests."""
-    user = crud.authenticate_user(
-        db, email=form_data.username, password=form_data.password
-    )
-    if not user:
-        raise HTTPException(status_code=400, detail="Incorrect email or password")
-    return {
-        "access_token": security.create_access_token(subject=user.id),
-        "token_type": "bearer",
-    }
-
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
