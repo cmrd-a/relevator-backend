@@ -2,18 +2,18 @@ from fastapi import FastAPI
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
-from app.api import items, users, auth
+from app.routers import items, users, auth
 from app.database import SessionLocal, engine
 from app.settings import settings
 
 app = FastAPI()
 
-app.include_router(auth.router, tags=["auth"])
-app.include_router(users.router, tags=["users"])
-app.include_router(items.router, tags=["items"])
+app.include_router(auth.router, tags=['auth'])
+app.include_router(users.router, tags=['users'])
+app.include_router(items.router, tags=['items'])
 
 
-@app.on_event("startup")
+@app.on_event('startup')
 def startup_event():
     models.Base.metadata.create_all(bind=engine)
     db: Session = SessionLocal()

@@ -12,7 +12,7 @@ def client() -> TestClient:
 
 def test_read_users(client: TestClient, db: Session):
     utils.create_test_user(db)
-    response = client.get("/users/")
+    response = client.get('/users/')
     data = response.json()
     assert data
     assert len(data) > 0
@@ -22,8 +22,8 @@ def test_create_user(client: TestClient, db: Session):
     token = utils.get_superuser_access_token(db)
     token_headers = utils.get_token_headers(token)
     response = client.post(
-        "/users/",
-        json={"email": "john@example.com", "password": "johnpass"},
+        '/users/',
+        json={'email': 'john@example.com', "password": "johnpass"},
         headers=token_headers,
     )
     data = response.json()

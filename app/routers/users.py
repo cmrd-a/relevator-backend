@@ -8,7 +8,7 @@ from app import crud, deps, models, schemas
 router = APIRouter()
 
 
-@router.get("/users/", response_model=List[schemas.User])
+@router.get('/users/', response_model=List[schemas.User])
 def read_users(
         skip: int = 0,
         limit: int = 100,
@@ -22,7 +22,7 @@ def read_users(
     return users
 
 
-@router.get("/users/me", response_model=schemas.User)
+@router.get('/users/me', response_model=schemas.User)
 def read_user_me(
         current_user: models.User = Depends(deps.get_current_user),
 ):

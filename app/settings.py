@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     super_user_password: str
 
     class Config:
-        env_file = ".env"
+        env_file = '.env'
 
 
 settings = Settings()

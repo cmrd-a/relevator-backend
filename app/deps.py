@@ -9,7 +9,7 @@ from app import crud, models, schemas, security
 from app.database import SessionLocal
 from app.settings import settings
 
-reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="/login/access-token")
+reusable_oauth2 = OAuth2PasswordBearer(tokenUrl='/login/access-token')
 
 
 async def get_db():
@@ -26,14 +26,14 @@ def get_current_user(db: Session = Depends(get_db), token: str = Depends(reusabl
         payload = jwt.decode(token, settings.secret_key, algorithms=[security.ALGORITHM])
         token_data = schemas.TokenPayload(**payload)
     except (jwt.PyJWTError, ValidationError):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Could not validate credentials")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Could not validate credentials')
     user = crud.get_user(db, user_id=token_data.sub)
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail='User not found')
     return user
 
 
 def get_current_superuser(current_user: models.User = Depends(get_current_user)):
     if not current_user.email == settings.super_user_email:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not the superuser")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Not the superuser')
     return current_user

@@ -8,7 +8,7 @@ from app import crud, deps, models, schemas
 router = APIRouter()
 
 
-@router.get("/items/", response_model=List[schemas.Item])
+@router.get('/items/', response_model=List[schemas.Item])
 def read_items(
         skip: int = 0,
         limit: int = 100,
@@ -22,7 +22,7 @@ def read_items(
     return items
 
 
-@router.post("/items/", response_model=schemas.Item)
+@router.post('/items/', response_model=schemas.Item)
 def create_item_for_current_user(
         item: schemas.ItemCreate,
         db: Session = Depends(deps.get_db),

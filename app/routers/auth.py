@@ -7,7 +7,7 @@ from app import crud, deps, schemas, security
 router = APIRouter()
 
 
-@router.post("/login/access-token", response_model=schemas.Token)
+@router.post('/login/access-token', response_model=schemas.Token)
 def login_access_token(
         db: Session = Depends(deps.get_db),
         form_data: OAuth2PasswordRequestForm = Depends()
@@ -17,8 +17,8 @@ def login_access_token(
         db, email=form_data.username, password=form_data.password
     )
     if not user:
-        raise HTTPException(status_code=400, detail="Incorrect email or password")
+        raise HTTPException(status_code=400, detail='Incorrect email or password')
     return {
-        "access_token": security.create_access_token(subject=user.id),
-        "token_type": "bearer",
+        'access_token': security.create_access_token(subject=user.id),
+        'token_type': 'bearer',
     }

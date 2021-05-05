@@ -10,7 +10,7 @@ def get_superuser_access_token(db: Session):
 
 
 def get_token_headers(token: str):
-    return {"Authorization": f"Bearer {token}"}
+    return {'Authorization': f'Bearer {token}'}
 
 
 def get_user_access_token(user: models.User):
@@ -18,7 +18,7 @@ def get_user_access_token(user: models.User):
 
 
 def create_test_user(db: Session):
-    user_in = schemas.UserCreate(email="test@example.com", password="examplesecret")
+    user_in = schemas.UserCreate(email='test@example.com', password='examplesecret')
     return crud.create_user(db, user=user_in)
 
 
