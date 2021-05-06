@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from app import crud, deps, models, schemas
@@ -22,7 +22,7 @@ async def read_items(
     return items
 
 
-@router.post('/items/', response_model=schemas.Item)
+@router.post('/items/', response_model=schemas.Item, status_code=status.HTTP_201_CREATED)
 async def create_item_for_current_user(
         item: schemas.ItemCreate,
         db: Session = Depends(deps.get_db),
