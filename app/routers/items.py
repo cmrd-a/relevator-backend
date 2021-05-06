@@ -36,7 +36,7 @@ async def create_item_for_current_user(
 
 
 @router.post(
-    "/users/{user_id}/items/",
+    '/users/{user_id}/items/',
     response_model=schemas.Item,
     dependencies=[Depends(deps.get_current_superuser)],
 )
