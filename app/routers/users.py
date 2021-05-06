@@ -27,7 +27,7 @@ async def read_users(
 
 @router.get('/me', response_model=schemas.User)
 async def read_user_me(
-        current_user: models.User = Depends(deps.get_current_user),
+        current_user: models.User = Depends(deps.get_current_active_user),
 ):
     """Read the user data for the currently authenticated user."""
     return current_user

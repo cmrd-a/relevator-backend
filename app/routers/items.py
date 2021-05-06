@@ -26,7 +26,7 @@ async def read_items(
 async def create_item_for_current_user(
         item: schemas.ItemCreate,
         db: Session = Depends(deps.get_db),
-        current_user: models.User = Depends(deps.get_current_user),
+        current_user: models.User = Depends(deps.get_current_active_user),
 ):
     """Create an item.
 

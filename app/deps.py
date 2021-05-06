@@ -22,15 +22,26 @@ async def get_db():
 
 
 async def get_current_user(db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)):
+    auth_exc = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid authentication credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
     try:
         payload = jwt.decode(token, settings.secret_key, algorithms=[security.ALGORITHM])
         token_data = schemas.TokenPayload(**payload)
     except (jwt.PyJWTError, ValidationError):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Could not validate credentials')
+        raise auth_exc
     user = crud.get_user(db, user_id=token_data.sub)
     if not user:
-        raise HTTPException(status_code=404, detail='User not found')
+        raise auth_exc
     return user
+
+
+async def get_current_active_user(current_user: models.User = Depends(get_current_user)):
+    if not current_user.is_active:
+        raise HTTPException(status_code=400, detail="Inactive user")
+    return current_user
 
 
 async def get_current_superuser(current_user: models.User = Depends(get_current_user)):
