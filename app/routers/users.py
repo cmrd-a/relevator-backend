@@ -5,11 +5,14 @@ from sqlalchemy.orm import Session
 
 from app import crud, deps, models, schemas
 
-router = APIRouter()
+router = APIRouter(
+    prefix='/users',
+    tags=['users']
+)
 
 
-@router.get('/users/', response_model=List[schemas.User])
-def read_users(
+@router.get('/', response_model=List[schemas.User])
+async def read_users(
         skip: int = 0,
         limit: int = 100,
         db: Session = Depends(deps.get_db)
@@ -22,16 +25,16 @@ def read_users(
     return users
 
 
-@router.get('/users/me', response_model=schemas.User)
-def read_user_me(
+@router.get('/me', response_model=schemas.User)
+async def read_user_me(
         current_user: models.User = Depends(deps.get_current_user),
 ):
     """Read the user data for the currently authenticated user."""
     return current_user
 
 
-@router.get("/users/{user_id}", response_model=schemas.User)
-def read_user(
+@router.get("/{user_id}", response_model=schemas.User)
+async def read_user(
         user_id: int,
         db: Session = Depends(deps.get_db)
 ):
@@ -46,11 +49,11 @@ def read_user(
 
 
 @router.post(
-    "/users/",
+    "/",
     response_model=schemas.User,
     dependencies=[Depends(deps.get_current_superuser)],
 )
-def create_user(user: schemas.UserCreate, db: Session = Depends(deps.get_db)):
+async def create_user(user: schemas.UserCreate, db: Session = Depends(deps.get_db)):
     """Create a new user. Ony accessible by the superuser."""
 
     db_user = crud.get_user_by_email(db, email=user.email)

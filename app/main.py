@@ -9,7 +9,7 @@ from app.settings import settings
 app = FastAPI()
 
 app.include_router(auth.router, tags=['auth'])
-app.include_router(users.router, tags=['users'])
+app.include_router(users.router)
 app.include_router(items.router, tags=['items'])
 
 

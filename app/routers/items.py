@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app import crud, deps, models, schemas
@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.get('/items/', response_model=List[schemas.Item])
-def read_items(
+async def read_items(
         skip: int = 0,
         limit: int = 100,
         db: Session = Depends(deps.get_db)
@@ -23,7 +23,7 @@ def read_items(
 
 
 @router.post('/items/', response_model=schemas.Item)
-def create_item_for_current_user(
+async def create_item_for_current_user(
         item: schemas.ItemCreate,
         db: Session = Depends(deps.get_db),
         current_user: models.User = Depends(deps.get_current_user),
@@ -40,7 +40,7 @@ def create_item_for_current_user(
     response_model=schemas.Item,
     dependencies=[Depends(deps.get_current_superuser)],
 )
-def create_item_for_user(
+async def create_item_for_user(
         user_id: int,
         item: schemas.ItemCreate,
         db: Session = Depends(deps.get_db)
