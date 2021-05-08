@@ -1,8 +1,9 @@
 from sqlalchemy import Boolean, Column, Integer, String
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
+from sqlalchemy.orm import declarative_base
 
-from app.db.common import Base
+Base = declarative_base()
 
 
 class Item(Base):
