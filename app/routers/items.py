@@ -3,7 +3,8 @@ from typing import List
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
-from app import crud, deps, models, schemas
+from app import crud, deps, schemas
+from app.db import models
 
 router = APIRouter()
 

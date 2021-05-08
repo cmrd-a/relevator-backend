@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 
-from .. import crud, models, schemas, security
+from .. import crud, schemas, security
+from ..db import models
 from ..settings import settings
 
 

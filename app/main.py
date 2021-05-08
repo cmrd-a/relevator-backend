@@ -3,8 +3,8 @@ import time
 from fastapi import FastAPI, Request
 from sqlalchemy.orm import Session
 
-from app import crud, models, schemas
-from app.database import SessionLocal, engine
+from app import crud, schemas
+from app.db.common import SessionLocal
 from app.routers import items, users, auth
 from app.settings import settings
 
@@ -26,7 +26,6 @@ async def add_process_time_header(request: Request, call_next):
 
 @app.on_event('startup')
 def startup_event():
-    models.Base.metadata.create_all(bind=engine)
     db: Session = SessionLocal()
     user = crud.get_user_by_email(db, settings.super_user_email)
     if not user:
@@ -35,3 +34,4 @@ def startup_event():
         )
         crud.create_user(db, user_in)
     db.close()
+    pass

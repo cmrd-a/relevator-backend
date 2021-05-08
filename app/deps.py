@@ -5,8 +5,9 @@ from pydantic import ValidationError
 from sqlalchemy.orm import Session
 from starlette import status
 
-from app import crud, models, schemas, security
-from app.database import SessionLocal
+from app import crud, schemas, security
+from app.db import models
+from app.db.common import SessionLocal
 from app.settings import settings
 
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl='/login/access-token')
