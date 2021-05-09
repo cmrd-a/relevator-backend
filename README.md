@@ -6,3 +6,8 @@
 * ```cp .env.example .env```
 * ```alembic upgrade head```
 * ```uvicorn app.main:app --reload```
+
+## Features:
+* [ ] Tests
+* [ ] Postgres DB
+* [ ] Async db queries
