@@ -1,5 +1,5 @@
 # relevator-backend
-
+Run in debug-mode:
 * ```pip install poetry```
 * ```poetry install```
 * ```poetry shell```
@@ -7,7 +7,12 @@
 * ```alembic upgrade head```
 * ```uvicorn app.main:app --reload```
 
+Run tests:
+* ```export ITS_TEST=True``` This is necessary in order to switch to the test database.
+* ```pytest```
+
 ## Features:
 * [ ] Tests
+* [ ] Logging
 * [ ] Postgres DB
 * [ ] Async db queries

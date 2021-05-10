@@ -1,3 +1,5 @@
+from typing import Generator
+
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 import jwt
@@ -10,10 +12,10 @@ from app.db import models
 from app.db.common import SessionLocal
 from app.settings import settings
 
-reusable_oauth2 = OAuth2PasswordBearer(tokenUrl='/login/access-token')
+reusable_oauth2 = OAuth2PasswordBearer(tokenUrl='/auth/access-token')
 
 
-async def get_db():
+async def get_db() -> Generator:
     try:
         db = SessionLocal()
         yield db

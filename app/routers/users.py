@@ -8,7 +8,7 @@ from app.db import models
 
 router = APIRouter(
     prefix='/users',
-    tags=['users']
+    tags=['users'],
 )
 
 

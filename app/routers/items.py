@@ -6,7 +6,9 @@ from sqlalchemy.orm import Session
 from app import crud, deps, schemas
 from app.db import models
 
-router = APIRouter()
+router = APIRouter(
+    tags=['items'],
+)
 
 
 @router.get('/items/', response_model=List[schemas.Item])
