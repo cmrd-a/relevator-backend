@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     super_user_password: str
 
     @property
-    def sqlalchemy_url(self):
+    def sqlalchemy_url(self) -> str:
         return self.test_db_url if self.its_test else self.actual_db_url
 
     class Config:

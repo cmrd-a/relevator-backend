@@ -1,5 +1,7 @@
 # relevator-backend
-Run in debug-mode:
+Some pet-project to practice FastAPI and a few other technologies.
+
+## Run in debug-mode:
 * ```pip install poetry```
 * ```poetry install```
 * ```poetry shell```
@@ -7,11 +9,11 @@ Run in debug-mode:
 * ```alembic upgrade head```
 * ```uvicorn app.main:app --reload```
 
-Run tests:
+## Run tests:
 * ```export ITS_TEST=True``` This is necessary in order to switch to the test database.
 * ```pytest```
 
-## Features:
+### Features:
 * [ ] Tests
 * [ ] Logging
 * [ ] Postgres DB
